@@ -136,3 +136,26 @@ with c4:
 # ---------------- FOOTER ----------------
 st.markdown("---")
 st.caption("© 2024 AI Market Intelligence Dashboard")
+# ---------------- CSV UPLOAD ----------------
+st.sidebar.markdown("### Upload Your CSV Data")
+uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type="csv")
+
+if uploaded_file is not None:
+    try:
+        df = pd.read_csv(uploaded_file)
+        st.sidebar.success("✅ File uploaded successfully!")
+        st.write("Preview of your CSV data:")
+        st.dataframe(df.head())
+
+        # Example: dynamically use CSV if it has specific columns
+        if {"Sentiment", "Value"}.issubset(df.columns):
+            sentiment_df = df[["Sentiment", "Value"]]
+        if {"Month", "Trend Score"}.issubset(df.columns):
+            trend_df = df[["Month", "Trend Score"]]
+        if {"Product", "Sentiment Score"}.issubset(df.columns):
+            product_df = df[["Product", "Sentiment Score"]]
+
+    except Exception as e:
+        st.sidebar.error(f"❌ Error reading CSV: {e}")
+else:
+    st.sidebar.info("Upload a CSV to replace the default data")
