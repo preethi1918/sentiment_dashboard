@@ -159,3 +159,4 @@ if uploaded_file is not None:
         st.sidebar.error(f"❌ Error reading CSV: {e}")
 else:
     st.sidebar.info("Upload a CSV to replace the default data")
+
